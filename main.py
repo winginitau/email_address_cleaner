@@ -1,5 +1,7 @@
-''' Clean up a heap of email addresses '''
-
+"""
+Clean up and de-dupe a heap of email addresses from different
+sources with inconsistent formatting.
+"""
 
 with open('list1.txt') as f:
     lines = f.readlines()
@@ -9,6 +11,7 @@ block = " ".join(lines)
 estart= ['<', '(']
 eend = ['>', ')']
 delims = [';', ',', ' ', '\n']
+
 
 class StripDetect():
     def __init__(self):
@@ -25,8 +28,7 @@ class StripDetect():
         self.unique_match = False
         self.matching = False
         self.last_complete_i = None
-        
-    
+
     def add_check(self, c):
         self.buf += c
         
@@ -36,7 +38,7 @@ class StripDetect():
             mai = self.match_array[i]
             ss = ssi[:mai+1]
             buf_end = self.buf[-self.match_array[i]-1:]
-            if  ss in buf_end:
+            if ss in buf_end:
                 self.matching = True
                 self.match_array[i] += 1
             else:
@@ -60,7 +62,8 @@ class StripDetect():
             
             return len(self.strip[last_complete_i])
         else: return 0
-        
+
+
 name_buf = ""
 email_buf = "" 
 
@@ -138,6 +141,7 @@ for i in range(0, len(block)):
 
 unique = {}
 
+
 def add(i):
     unique[emails[i].lower()] = [emails[i], names[i]]
 
@@ -159,6 +163,4 @@ for _i, v in sorted_list_tup:
     else:
         recipient = f'{n} <{e}>'
     print(recipient)
-        
-            
-            
+
